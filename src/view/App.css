@@ -1,0 +1,428 @@
+.App {
+    text-align: center;
+    font-size: 24px;
+    color: #ffffff; /* White text color */
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 90px; /* Add some padding */
+}
+/* From Uiverse.io by akshat-patel28 */ 
+.card {
+    width: 150px;
+    height: 150px;
+    background: rgba(17, 4, 134, 0.562);
+    border-radius: 15px;
+    box-shadow: rgb(0,0,0,0.7) 5px 10px 50px ,rgb(0,0,0,0.7) -5px 0px 250px;
+    display: flex;
+    color: white;
+    justify-content: center;
+    position: relative;
+    flex-direction: column;
+    background: linear-gradient(to right, rgba(20, 30, 48, 0.607), rgba(36, 59, 85, 0.758));
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    margin-top: 11px;
+  }
+  
+  .buttom{
+    width: 150px;
+    height: 100px;
+    margin-bottom: 10px;
+
+  }
+  .card:hover {
+    box-shadow: rgb(0,0,0) 5px 10px 50px ,rgb(0,0,0) -5px 0px 250px;
+  }
+  
+  .ctitle {
+    font-size: 17px;
+    margin-top: 15px;
+    margin-left: 10px;
+    font-weight: 600;
+    font-family: "Merienda", serif;
+    margin-inline-end: auto;
+    margin-inline-start: auto;
+    
+}
+  
+  .ccontent {
+    font-size: 30px;
+    margin-top: 0px;
+    position: relative;
+    font-weight: 500;
+    font-family: "Kranky", serif;
+    margin-inline-end: auto;
+    margin-inline-start: auto;
+}
+  
+.battery-p {
+    font-size: 35px;
+    bottom: -5px;
+}
+
+
+
+.g-circle {
+  position: relative;
+  box-sizing: border-box;
+  bottom: -25px;
+  margin-block-start: auto;
+  z-index: 0;
+}
+
+.g-circle::after {
+  content: "";
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(0);
+  width: 90px;
+  height: 90px;
+  background-color: #00ff6f;
+  border-radius: 42% 38% 62% 49% / 45%;
+  animation: rotate 10s infinite linear;
+}
+.g-circle::before {
+  content: "";
+  position: absolute;
+  width: 85px;
+  height: 85px;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background-color: #051939d1;
+  z-index: 10;
+}
+
+.g-circle.hidden::after,
+.g-circle.hidden::before {
+  display: none;
+}
+
+ /*  New line of code  */
+@keyframes rotate {
+  50% {
+    border-radius: 45% / 42% 38% 58% 49%;
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(720deg);
+  }
+}
+
+.on-of{
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.autostart {
+  margin-bottom: 30px;
+ }
+.cosmic-toggle {
+  
+  position: absolute;
+  width: 70px;
+  margin-left: 40px;
+  margin-block: auto;
+  margin-block-start: inherit;
+  margin-block-end: auto;
+  height: 30px;
+  transform-style: preserve-3d;
+  perspective: 500px;
+}
+
+.toggle {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, #7e1616a3, #610202c1);
+  border-radius: 35px;
+  transition: 0.5s;
+  transform-style: preserve-3d;
+  box-shadow:
+    0 0 20px rgba(0, 0, 0, 0.5),
+    inset 0 0 15px rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.cosmos {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(1px 1px at 10% 10%, #fff 100%, transparent),
+    radial-gradient(1px 1px at 20% 20%, #fff 100%, transparent),
+    radial-gradient(2px 2px at 30% 30%, #fff 100%, transparent),
+    radial-gradient(1px 1px at 40% 40%, #fff 100%, transparent),
+    radial-gradient(2px 2px at 50% 50%, #fff 100%, transparent),
+    radial-gradient(1px 1px at 60% 60%, #fff 100%, transparent),
+    radial-gradient(2px 2px at 70% 70%, #fff 100%, transparent),
+    radial-gradient(1px 1px at 80% 80%, #fff 100%, transparent),
+    radial-gradient(1px 1px at 90% 90%, #fff 100%, transparent);
+  background-size: 200% 200%;
+  opacity: 0.1;
+  transition: 0.5s;
+}
+
+.toggle-orb {
+  position: absolute;
+  height: 22px;
+  width: 22px;
+  left: 4px;
+  bottom: 4px;
+  background: linear-gradient(145deg, #ff6b6b, #cd4e4e);
+  border-radius: 50%;
+  transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform-style: preserve-3d;
+  z-index: 2;
+}
+
+.inner-orb {
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #fff, #e6e6e6);
+  transition: 0.5s;
+  overflow: hidden;
+}
+
+.inner-orb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(0, 0, 0, 0.1) 10deg,
+    transparent 20deg
+  );
+  animation: patternRotate 10s linear infinite;
+}
+
+.ring {
+  position: absolute;
+  inset: -3px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: 0.5s;
+}
+
+.toggle:checked + .slider {
+  background: linear-gradient(45deg, #02b16e, #1a282e);
+}
+
+.toggle:checked + .slider .toggle-orb {
+  transform: translateX(40px) rotate(360deg);
+  background: linear-gradient(145deg, #00bd68, #0cb661);
+}
+
+.toggle:checked + .slider .inner-orb {
+  background: linear-gradient(145deg, #9afcd1, #ffffff);
+  transform: scale(0.9);
+}
+
+.toggle:checked + .slider .ring {
+  border-color: rgba(168, 237, 200, 0.607);
+  animation: ringPulse 2s infinite;
+}
+
+.energy-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 244, 102, 0.628),
+    transparent
+  );
+  transform-origin: left;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.energy-line:nth-child(1) {
+  top: 20%;
+  transform: rotate(15deg);
+}
+.energy-line:nth-child(2) {
+  top: 50%;
+  transform: rotate(0deg);
+}
+.energy-line:nth-child(3) {
+  top: 80%;
+  transform: rotate(-15deg);
+}
+
+.toggle:checked + .slider .energy-line {
+  opacity: 1;
+  animation: energyFlow 2s linear infinite;
+}
+
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #00ff55;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.toggle:checked + .slider .particle {
+  animation: particleBurst 1s ease-out infinite;
+}
+
+.particle:nth-child(1) {
+  left: 20%;
+  animation-delay: 0s;
+}
+.particle:nth-child(2) {
+  left: 40%;
+  animation-delay: 0.2s;
+}
+.particle:nth-child(3) {
+  left: 60%;
+  animation-delay: 0.4s;
+}
+.particle:nth-child(4) {
+  left: 80%;
+  animation-delay: 0.6s;
+}
+.particle:nth-child(5) {
+  left: 30%;
+  animation-delay: 0.8s;
+}
+.particle:nth-child(6) {
+  left: 70%;
+  animation-delay: 1s;
+}
+
+/* Анимации */
+@keyframes ringPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.6;
+  }
+}
+
+@keyframes patternRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes energyFlow {
+  0% {
+    transform: scaleX(0) translateX(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scaleX(1) translateX(50%);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(0) translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes particleBurst {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(
+        calc(cos(var(--angle)) * 50px),
+        calc(sin(var(--angle)) * 50px)
+      )
+      scale(0);
+    opacity: 0;
+  }
+}
+
+/* Hover эффекты */
+.slider:hover .toggle-orb {
+  filter: brightness(1.2);
+  box-shadow:
+    0 0 20px rgba(191, 228, 220, 0.5),
+    0 0 40px rgba(147, 210, 197, 0.3);
+}
+
+.slider:hover .cosmos {
+  opacity: 0.2;
+  animation: cosmosPan 20s linear infinite;
+}
+
+@keyframes cosmosPan {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 200%;
+  }
+}
+
+/* Активное состояние */
+.toggle:active + .slider .toggle-orb {
+  transform: scale(0.95);
+}
+
+/* 3D эффект при наведении */
+.cosmic-toggle:hover .slider {
+  transform: rotateX(10deg) rotateY(10deg);
+}
+
+.cosmic-toggle:hover .toggle-orb {
+  transform: translateZ(10px);
+}
+
+/* Тень */
+.toggle:checked + .slider::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--x) var(--y),
+    rgba(255, 0, 0, 0.2),
+    transparent 50%
+  );
+  opacity: 0;
+  animation: glowFollow 2s linear infinite;
+}
+
+@keyframes glowFollow {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

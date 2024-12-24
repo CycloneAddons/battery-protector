@@ -1,0 +1,240 @@
+:root {
+  --spice-star: #ffffff; /* Define the star color */
+  --spice-star-glow: #ffffff; /* Define the star glow color */
+}
+
+@keyframes twinkle1 {
+  0% {
+    box-shadow: 0px 0px 8px 2px var(--spice-star-glow);
+  }
+  20% {
+    box-shadow: 0px 0px -8px 2px var(--spice-star-glow);
+  }
+  40% {
+    box-shadow: 0px 0px -8px 2px var(--spice-star-glow);
+  }
+  60% {
+    box-shadow: 0px 0px -8px 2px var(--spice-star-glow);
+  }
+  80% {
+    box-shadow: 0px 0px 8px 2px var(--spice-star-glow);
+  }
+  100% {
+    box-shadow: 0px 0px 8px 2px var(--spice-star-glow);
+  }
+}
+
+@keyframes twinkle2 {
+  0% {
+    box-shadow: 0px 0px 8px 2px var(--spice-star-glow);
+  }
+  20% {
+    box-shadow: 0px 0px 8px 2px var(--spice-star-glow);
+  }
+  40% {
+    box-shadow: 0px 0px -8px 2px var(--spice-star-glow);
+  }
+  60% {
+    box-shadow: 0px 0px -8px 2px var(--spice-star-glow);
+  }
+  80% {
+    box-shadow: 0px 0px -8px 2px var(--spice-star-glow);
+  }
+  100% {
+    box-shadow: 0px 0px 8px 2px var(--spice-star-glow);
+  }
+}
+
+@keyframes twinkle3 {
+  0% {
+    box-shadow: 0px 0px -8px 2px var(--spice-star-glow);
+  }
+  20% {
+    box-shadow: 0px 0px 8px 2px var(--spice-star-glow);
+  }
+  40% {
+    box-shadow: 0px 0px 8px 2px var(--spice-star-glow);
+  }
+  60% {
+    box-shadow: 0px 0px 8px 2px var(--spice-star-glow);
+  }
+  80% {
+    box-shadow: 0px 0px -8px 2px var(--spice-star-glow);
+  }
+  100% {
+    box-shadow: 0px 0px -8px 2px var(--spice-star-glow);
+  }
+}
+
+@keyframes twinkle4 {
+  0% {
+    box-shadow: 0px 0px -8px 2px var(--spice-star-glow);
+  }
+  20% {
+    box-shadow: 0px 0px -8px 2px var(--spice-star-glow);
+  }
+  40% {
+    box-shadow: 0px 0px 8px 2px var(--spice-star-glow);
+  }
+  60% {
+    box-shadow: 0px 0px 8px 2px var(--spice-star-glow);
+  }
+  80% {
+    box-shadow: 0px 0px 8px 2px var(--spice-star-glow);
+  }
+  100% {
+    box-shadow: 0px 0px -8px 2px var(--spice-star-glow);
+  }
+}
+
+.stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  z-index: -1; /* Ensure stars are behind the text */
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--spice-star);
+  border-radius: 50%;
+}
+
+.star.twinkle1 {
+  animation: twinkle1 2s infinite;
+}
+
+.star.twinkle2 {
+  animation: twinkle2 2s infinite;
+}
+
+.star.twinkle3 {
+  
+  animation: twinkle3 2s infinite;
+}
+
+.star.twinkle4 {
+  animation: twinkle4 2s infinite;
+}
+
+a {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 100%;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1), 0 0 0 8px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
+  animation: animate 7s linear infinite;
+}
+
+a::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 200px;
+  height: 1px;
+  
+  background: linear-gradient(90deg, #fff, transparent);
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(315deg) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(315deg) translateX(-1000px);
+    opacity: 0;
+  }
+}
+
+a:nth-child(1) {
+  top: 0;
+  right: 0;
+  left: initial;
+  animation-delay: 0s;
+  animation-duration: 3s;
+}
+
+a:nth-child(2) {
+  top: 0;
+  right: 80px;
+  left: initial;
+  animation-delay: 0.2s;
+  animation-duration: 3s;
+}
+
+a:nth-child(3) {
+  top: 80;
+  right: 0px;
+  left: initial;
+  animation-delay: 0.4s;
+  animation-duration: 2s;
+}
+
+a:nth-child(4) {
+  top: 0;
+  right: 180px;
+  left: initial;
+  animation-delay: 0.6s;
+  animation-duration: 1.5s;
+}
+
+a:nth-child(5) {
+  top: 0;
+  right: 400px;
+  left: initial;
+  animation-delay: 0.8s;
+  animation-duration: 2.5s;
+}
+
+a:nth-child(6) {
+  top: 0;
+  right: 600px;
+  left: initial;
+  animation-delay: 1s;
+  animation-duration: 3s;
+}
+
+a:nth-child(7) {
+  top: 300px;
+  right: 0px;
+  left: initial;
+  animation-delay: 1.2s;
+  animation-duration: 1.75s;
+}
+
+a:nth-child(8) {
+  top: 0px;
+  right: 700px;
+  left: initial;
+  animation-delay: 1.4s;
+  animation-duration: 1.25s;
+}
+
+a:nth-child(9) {
+  top: 0px;
+  right: 1000px;
+  left: initial;
+  animation-delay: 0.75s;
+  animation-duration: 2.25s;
+}
+
+a:nth-child(9) {
+  top: 0px;
+  right: 450px;
+  left: initial;
+  animation-delay: 2.75s;
+  animation-duration: 2.75s;
+}

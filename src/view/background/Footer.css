@@ -1,0 +1,47 @@
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: fixed;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+}
+
+.icons {
+    display: flex;
+    gap: 15px;
+    flex-direction: row;
+}
+
+.icons svg {
+    color: #d6f3ff;
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.3s, filter 0.3s ease-in-out;
+    will-change: transform, filter;
+}
+
+.icons svg:hover {
+    transform: scale(1.2); /* Slight zoom effect */
+    filter: drop-shadow(0 0 5px #00ff9d) drop-shadow(0 0 15px #00ffc3) drop-shadow(0 0 30px #48b3a1) drop-shadow(0 0 45px #00ffdd); /* Neon Glow Effect */
+}
+
+.copyright {
+    margin-top: 10px;
+    font-size: 10px;
+    color: #ffffff;
+    text-align: center;
+    white-space: nowrap;
+    filter: drop-shadow(0 0 5px #00ff9d) drop-shadow(0 0 15px #00ffc3) drop-shadow(0 0 30px #48b3a1) drop-shadow(0 0 45px #00ffdd); /* Neon Glow Effect */
+
+}
+
+@media (max-width: 600px) {
+    .icons {
+        flex-direction: row; /* Ensure icons are always horizontal */
+    }
+}
