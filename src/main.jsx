@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";  // Import from react-dom/client
 import "./main.css";
 import App from "./view/App";
+import { BrowserRouter } from 'react-router';
+
 import Background from "./view/background/bg";
 import Footer from "./view/background/footer";
 
@@ -11,7 +13,9 @@ root.render(
   // <React.StrictMode>
   <>
   <Background />
+  <BrowserRouter>
   <App />
+  </BrowserRouter>
   <Footer />
 </>
 

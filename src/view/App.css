@@ -13,10 +13,11 @@
 }
 /* From Uiverse.io by akshat-patel28 */ 
 .card {
+    margin: auto;
     width: 150px;
     height: 150px;
     background: rgba(17, 4, 134, 0.562);
-    border-radius: 15px;
+    border-radius: 5px;
     box-shadow: rgb(0,0,0,0.7) 5px 10px 50px ,rgb(0,0,0,0.7) -5px 0px 250px;
     display: flex;
     color: white;
@@ -27,7 +28,175 @@
     transition: all 0.3s ease-in-out;
     overflow: hidden;
     margin-top: 11px;
+    /* margin-bottom: px; */
   }
+
+  .navbar {
+    position: fixed;
+    margin: auto;
+    top: 10px;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex; /* Align navbuttons horizontally */
+    gap: 10px; /* Add space between the navbuttons */
+    justify-content: center; /* Center the navbar */
+  }
+  
+  .navbutton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px; /* Increase the width to accommodate text */
+    height: 40px;
+    background: rgba(8, 0, 82, 0.862);
+    border-radius: 15px;
+    border: none;
+    box-shadow: rgb(0,0,0,0.7) 5px 10px 50px, rgb(0,0,0,0.7) -5px 0px 250px;
+    color: rgb(255, 255, 255);
+    background: linear-gradient(to right, rgba(20, 30, 48, 0.607), rgba(36, 59, 85, 0.758));
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    text-decoration: none; /* Remove underline from link */
+  }
+
+  .normal:hover {
+    background: #14447b;
+  }
+  
+  .itemname {
+    font-size: 12px; /* Adjust font size */
+    font-weight: 400;
+  }
+  
+  .no-animation {
+    animation: none !important;
+    transition: none !important;
+    content: none !important;
+  }
+  
+  .stopbutton {
+    background: rgba(126, 6, 6, 0.862);
+  }
+  .stopbutton:hover {
+    background: rgba(196, 17, 17, 0.862);
+  }
+
+  .onbutton {
+    background: rgba(9, 162, 101, 0.862);
+  }
+  
+/* Main container for popup */
+.popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Transparent black backdrop */
+  z-index: 999;
+  animation: fadeInBackdrop 0.3s ease-in-out;
+}
+
+.popup-menu {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #0b1a34d2;
+  border-radius:50px;
+  padding: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  width: 200px; /* Fixed width */
+  z-index: 1000;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center buttons horizontally */
+  opacity: 0;
+  animation: popupEnter 0.3s forwards;
+}
+
+/* Button styles inside the popup */
+.popup-menu button {
+  width: 60px; /* Width of each button */
+  padding: 10px;
+  background-color: #a41818;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 5px; /* Gap between buttons */
+}
+
+/* Button hover effect */
+.popup-menu button:hover {
+  background-color: #147b39;
+}
+
+/* Backdrop fade-in effect */
+@keyframes fadeInBackdrop {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Popup menu entry animation */
+@keyframes popupEnter {
+  0% {
+    transform: translate(-50%, -60%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+
+/* Exit animation for popup and backdrop (can be triggered dynamically if needed) */
+@keyframes popupExit {
+  0% {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -60%);
+    opacity: 0;
+  }
+}
+
+/* If popup is closed, trigger exit animation */
+.popup-exit {
+  animation: popupExit 0.3s forwards;
+}
+
+/* Optionally, add a smooth transition for backdrop */
+.popup-backdrop.exiting {
+  animation: fadeOutBackdrop 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeOutBackdrop {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
+  .coming-soon {
+    font-size: 1.7rem;
+    font-family: "Jersey 15", serif;
+    text-align: center;
+  }
+  
+
+
   
   .buttom{
     width: 150px;
@@ -55,13 +224,13 @@
     margin-top: 0px;
     position: relative;
     font-weight: 500;
-    font-family: "Kranky", serif;
+    font-family: "Jersey 15", serif;
     margin-inline-end: auto;
     margin-inline-start: auto;
 }
   
 .battery-p {
-    font-size: 35px;
+    font-size: 40px;
     bottom: -5px;
 }
 
