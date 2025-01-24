@@ -33,10 +33,11 @@ const App = () => {
   const checkStopSound = async () => {
     const soundStatus = await read('soundStatus');
     if (soundStatus === 'stopped') {
+      stopSound();
       const stopTimestamp = await read('stopTimestamp');  
       const stopDuration = await read('stopDuration');
       if (stopDuration === "Infinite") {
-        setIsSoundStopped(false);
+        setIsSoundStopped(true);
         return;
       }
       const currentTime = Date.now();
@@ -46,12 +47,12 @@ const App = () => {
           handleStartSound();
         }, remainingTime);
         setTimeoutId(id);
-        setIsSoundStopped(false);
-      } else {
         setIsSoundStopped(true);
+      } else {
+        setIsSoundStopped(false);
       }
     } else {
-      setIsSoundStopped(true);
+      setIsSoundStopped(false);
     }
   };
 
@@ -73,7 +74,7 @@ const App = () => {
     updateTray({ tooltip: `Battery Status: ${roundedLevel}%${battery.charging ? ' (Charging)' : ' (Remaining)'}`, level: roundedLevel, });
 
 
-    if (battery.charging && battery.level >= 0.8 && !isAlerted && isSoundStopped) { isAlerted = await startSound(); notifyUser(`Battery level reached ${roundedLevel}%. Please unplug the charger`, 'Warning:'); }
+    if (battery.charging && battery.level >= 0.8 && !isAlerted && !isSoundStopped) { isAlerted = await startSound(); notifyUser(`Battery level reached ${roundedLevel}%. Please unplug the charger`, 'Warning:'); }
     if (!battery.charging || battery.level < 0.8) { isAlerted = await stopSound(); }
   };
 
@@ -88,6 +89,7 @@ const App = () => {
   };
 
   const handleCheckboxChange = async () => {
+console.log(await read('stopDuration'));
     if (isChecked) { await disable(); } else { await enable();}
     setIsChecked(!isChecked);
   };
