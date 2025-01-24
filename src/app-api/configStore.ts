@@ -50,6 +50,7 @@ export async function read(key) {
   // Read the file contents
   const fileContent = await readTextFile(CONFIG_FILE, { baseDir: BaseDirectory.AppConfig });
   const data = JSON.parse(fileContent);
+  console.log(data);
 
   // Return the value associated with the key or null if not found
   return data[key] ?? null;
