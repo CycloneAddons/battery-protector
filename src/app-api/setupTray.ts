@@ -1,10 +1,13 @@
 import { TrayIcon } from '@tauri-apps/api/tray';
 import { Menu } from '@tauri-apps/api/menu';
 import { getCurrentWindow } from '@tauri-apps/api/window';
+import { resolveResource } from '@tauri-apps/api/path';
 
 let tray: TrayIcon;
 
-export const setupTray = async ({ tooltip, icon }: { tooltip?: string, icon?: string }) => {
+export const setupTray = async ({ tooltip, level }: { tooltip?: string, level?: number }) => {
+  const icon = await resolveResource(`assets/tray/dark/` + level + ".png");
+
   if (!tray) {
     // Create tray icon with menu
     const menu = await Menu.new({
@@ -49,7 +52,9 @@ export const setupTray = async ({ tooltip, icon }: { tooltip?: string, icon?: st
   });
 };
 
-export const updateTray = async ({ tooltip, icon }: { tooltip?: string, icon?: string }) => {
+export const updateTray = async ({ tooltip, level }: { tooltip?: string, level?: number }) => {
+  const icon = await resolveResource(`assets/tray/dark/` + level + ".png");
+  
   if (tray) {
     if (tooltip) await tray.setTooltip(tooltip);
     if (icon) await tray.setIcon(icon);

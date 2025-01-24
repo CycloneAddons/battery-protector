@@ -1,149 +1,188 @@
-import React, { useState, useEffect } from 'react';
-import { setupTray, updateTray } from '../app-api/setupTray';
-import { notifyUser } from '../app-api/notify';
-import { invoke } from '@tauri-apps/api/core';
-import './app.css';
 import { enable, isEnabled, disable } from '@tauri-apps/plugin-autostart'
-import { resolveResource } from '@tauri-apps/api/path';
+import { startSound, stopSound } from '../app-api/soundControl';
+import { setupTray, updateTray } from '../app-api/setupTray';
+import { Route, Routes, useNavigate } from 'react-router';
+import { write, read, clear } from '../app-api/configStore';
+import React, { useState, useEffect } from 'react';
+import { notifyUser } from '../app-api/notify';
+import Setting from './Setting';
+import Home from './Home';
+import './app.css';
+
+
+
 
 
 const App = () => {
-  const [batteryInfo, setBatteryInfo] = useState({
-    level: 1,
-    charging: true,
-  });
+  const [batteryInfo, setBatteryInfo] = useState({ level: 1, charging: true });
+  const [isSoundStopped, setIsSoundStopped] = useState(false);
+  const [popupVisible, setPopupVisible] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [timeoutId, setTimeoutId] = useState(null);
+  const navigate = useNavigate();
   let isAlerted = false;
 
   useEffect(() => {
-    const startSound = async () => {
-      try {
-        await invoke('play_sound');
-        console.log('Sound started');
-        isAlerted = true;
-      } catch (error) {
-        console.error('Error starting sound:', error);
-      }
-    };
-
-    const stopSound = async () => {
-      try {
-        await invoke('stop_sound');
-        console.log('Sound stopped');
-        isAlerted = false;
-      } catch (error) {
-        console.error('Error stopping sound:', error);
-      }
-    };
-
-    const updateBatteryInfo = async (battery) => {
-      const roundedLevel = Math.round(battery.level * 100);
-
-      setBatteryInfo({
-        level: roundedLevel / 100,
-        charging: battery.charging,
-      });
-      const icon = await resolveResource(`assets/tray/dark/`+roundedLevel+".png");
-console.log(icon)
-      updateTray({
-        tooltip: `Battery Status: ${roundedLevel}%${
-          battery.charging ? ' (Charging)' : ' (Remaining)'
-        }`,
-        icon: icon,
-      });
-
-      if (battery.charging && battery.level >= 0.8 && !isAlerted) {
-        startSound();
-        notifyUser(
-          `Battery level reached ${roundedLevel}%. Please unplug the charger`,
-          'Warning:'
-        );
-      }
-
-      if (!battery.charging || battery.level < 0.8) {
-        stopSound();
-      }
-    };
-
-    const getBatteryInfo = async () => {
-      const battery = await navigator.getBattery();
-      updateBatteryInfo(battery);
-      const iconStart = await resolveResource(`assets/tray/dark/`+Math.round(battery.level * 100)+".png");
-console.log(iconStart)
-      setupTray({
-        tooltip: `Battery Status: ${Math.round(battery.level * 100)}%${
-          battery.charging ? ' (Charging)' : ' (Remaining)'
-        }`,
-        icon: iconStart,
-      });
-
-      battery.addEventListener('levelchange', async () => await updateBatteryInfo(battery));
-      battery.addEventListener('chargingchange', async () =>
-       await updateBatteryInfo(battery)
-      );
-    };
-
+    checkStopSound();
     getBatteryInfo();
-
-    const checkIsEnabled = async () => {
-      const enabled = await isEnabled();
-      console.log('Is enabled:', enabled);
-      setIsChecked(enabled);
-    };
-
     checkIsEnabled();
   }, []);
 
-  const handleCheckboxChange = async () => {
-    if (isChecked) {
-      await disable();
+
+  //Check Stop Sound on App Start or Restart
+  const checkStopSound = async () => {
+    const soundStatus = await read('soundStatus');
+    if (soundStatus === 'stopped') {
+      const stopTimestamp = await read('stopTimestamp');  
+      const stopDuration = await read('stopDuration');
+      if (stopDuration === "Infinite") {
+        setIsSoundStopped(false);
+        return;
+      }
+      const currentTime = Date.now();
+      const remainingTime = stopDuration - (currentTime - stopTimestamp);
+      if (remainingTime > 0) {
+        const id = setTimeout(async () => {
+          handleStartSound();
+        }, remainingTime);
+        setTimeoutId(id);
+        setIsSoundStopped(false);
+      } else {
+        setIsSoundStopped(true);
+      }
     } else {
-      await enable();
+      setIsSoundStopped(true);
     }
+  };
+
+  //Fetch & Update Battery Info
+  const getBatteryInfo = async () => {
+    const battery = await navigator.getBattery();
+    const roundedLevel = Math.round(battery.level * 100);
+    updateBatteryInfo(battery);
+    setupTray({ tooltip: `Battery Status: ${roundedLevel}%${battery.charging ? ' (Charging)' : ' (Remaining)'}`, level: roundedLevel });
+    
+    //Battery Event Listeners
+    battery.addEventListener('levelchange', async () => await updateBatteryInfo(battery));
+    battery.addEventListener('chargingchange', async () => await updateBatteryInfo(battery));
+  };
+
+  const updateBatteryInfo = async (battery) => {
+    const roundedLevel = Math.round(battery.level * 100);
+    setBatteryInfo({ level: roundedLevel / 100, charging: battery.charging });
+    updateTray({ tooltip: `Battery Status: ${roundedLevel}%${battery.charging ? ' (Charging)' : ' (Remaining)'}`, level: roundedLevel, });
+
+
+    if (battery.charging && battery.level >= 0.8 && !isAlerted && isSoundStopped) { isAlerted = await startSound(); notifyUser(`Battery level reached ${roundedLevel}%. Please unplug the charger`, 'Warning:'); }
+    if (!battery.charging || battery.level < 0.8) { isAlerted = await stopSound(); }
+  };
+
+
+
+
+
+  //AutoStart Controler
+  const checkIsEnabled = async () => {
+    const enabled = await isEnabled();
+    setIsChecked(enabled);
+  };
+
+  const handleCheckboxChange = async () => {
+    if (isChecked) { await disable(); } else { await enable();}
     setIsChecked(!isChecked);
   };
-  
+
+
+
+  //Redirect Controler
+  const handleNavigate = (path) => {
+    navigate(path);
+  };
+
+
+  //ALarm Controler
+  const handleSelectTime = async (time) => {
+    if (timeoutId) { clearTimeout(timeoutId); setTimeoutId(null); }
+    stopSound()
+    setPopupVisible(false);
+    setIsSoundStopped(true);
+
+   await write('soundStatus', 'stopped');
+   await write('stopTimestamp', Date.now());
+   await write('stopDuration', time);
+
+   if(time === "Infinite") return; //
+    const id = setTimeout(async () => {
+        handleStartSound();
+    }, time);
+    setTimeoutId(id);
+  }
+
+  const handleStartSound = async () => {
+    if (timeoutId) { clearTimeout(timeoutId); setTimeoutId(null); }
+
+   await write('soundStatus', 'started');
+   await write('stopTimestamp', null);
+   await write('stopDuration', null);
+
+    if(batteryInfo.charging && batteryInfo.level >= 0.6) {
+      notifyUser(`Battery level reached ${Math.round(batteryInfo.level * 100)}%. Please unplug the charger`, 'Stop Sound Time Reached:');
+      isAlerted = await startSound(); 
+      setIsSoundStopped(false);
+    } else {
+      setIsSoundStopped(false);
+    }
+  }
+
+  const handleStopSound = () => {
+    setPopupVisible(true);
+  }
+
+
+
+
+
   return (
     <div>
-      <div className="card">
-        
-            <p className="ctitle"><span>Battery Level</span></p>
-            <div className={`g-circle ${!batteryInfo.charging ? 'hidden' : ''}`}></div>
-          
-        <p className="ccontent battery-p">{Math.round(batteryInfo.level * 100)}%</p>
+      <div className="navbar">
+        <button
+          onClick={() => handleNavigate('/')}
+          className="navbutton normal no-animation"
+        >
+          <span className="itemname">Home</span>
+        </button>
+        <button
+          onClick={isSoundStopped ? handleStartSound : handleStopSound}
+          className={isSoundStopped ? "navbutton onbutton no-animation" : "navbutton stopbutton no-animation"}
+        >
+          <span className="itemname">{isSoundStopped ? 'On Sound' : 'Stop Sound'}</span>
+        </button>
+        <button
+          onClick={() => handleNavigate('/settings')}
+          className="navbutton normal no-animation"
+        >
+          <span className="itemname">Settings</span>
+        </button>
       </div>
-      <div className="card buttom">
-        <p className="ctitle autostart"><span>Autostart</span></p>
-        <label className="cosmic-toggle">
-          <input 
-            className="toggle" 
-            type="checkbox" 
-            checked={isChecked} 
-            onChange={handleCheckboxChange} 
-          />
-          <div className="slider">
-            <div className="cosmos" />
-            <div className="energy-line" />
-            <div className="energy-line" />
-            <div className="energy-line" />
-            <div className="toggle-orb">
-              <div className="inner-orb" />
-              <div className="ring" />
-            </div>
-            <div className="particles">
-              <div style={{ '--angle': '30deg' }} className="particle" />
-              <div style={{ '--angle': '60deg' }} className="particle" />
-              <div style={{ '--angle': '90deg' }} className="particle" />
-              <div style={{ '--angle': '120deg' }} className="particle" />
-              <div style={{ '--angle': '150deg' }} className="particle" />
-              <div style={{ '--angle': '180deg' }} className="particle" />
-            </div>
+
+      {popupVisible && (
+        <>
+          <div className="popup-backdrop" onClick={() => setPopupVisible(false)}></div>
+          <div className="popup-menu">
+            <button onClick={() => handleSelectTime(300000)}>5 min</button>
+            <button onClick={() => handleSelectTime(600000)}>10 min</button>
+            <button onClick={() => handleSelectTime(30 * 60 * 1000)}>30 min</button>
+            <button onClick={() => handleSelectTime("Infinite")}>Until I turn it back on</button>
           </div>
-        </label>
-        <p className="ccontent on-of">{isChecked ? 'On' : 'Off'}</p>
-      </div>
+        </>
+      )}
+
+      <Routes>
+        <Route path="/" element={<Home batteryInfo={batteryInfo} handleCheckboxChange={handleCheckboxChange} isChecked={isChecked} />} />
+        <Route path="/settings" element={<Setting />} />
+      </Routes>
     </div>
   );
-};
+}
 
 export default App;

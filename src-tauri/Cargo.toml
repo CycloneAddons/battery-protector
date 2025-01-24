@@ -1,8 +1,8 @@
 [package]
 name = "battery-protector"
-version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+version = "0.2.0"
+description = "Battery Protector is a lightweight software for Windows that alerts the user when the battery reaches 80% and plays music until the charger is unplugged."
+authors = ["CycloneAddons"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -27,7 +27,7 @@ tauri-plugin-notification = "2.2.0"
 web-audio-api = "1.1.0"
 tauri-plugin-shell = "2"
 tauri-plugin-autostart = "2.2.0"
-tauri-plugin-fs = "2.2.0"
+tauri-plugin-fs = "2"
 
 
 [features]

@@ -4,7 +4,7 @@
 </p>
 
 Battery Protector is a lightweight software for Windows that alerts the user when the battery reaches 80% and plays music until the charger is unplugged. It also displays the battery percentage in the system tray.
-
+  
 ---
 
 ## 🚀 Features
@@ -46,11 +46,11 @@ Battery Protector is a lightweight software for Windows that alerts the user whe
 ## 🪄 Download Links
 
 <p align="center">
-<a href="https://github.com/CycloneAddons/battery-protector/releases/download/v0.1.0/Battery.Protector_0.1.0_x64_en-US.msi" target="_blank">
+<a href="https://github.com/CycloneAddons/battery-protector/releases/download/v0.2.0/Battery.Protector_0.2.0_x64_en-US.msi" target="_blank">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIA6EQGWpIc35oJ9C3CNGLXceYtWVitsCc3gfQrvvDVmefEWY72Rd70m4PaYTq6DTOUpA&usqp=CAU" alt="MSI Icon" height="70"  style="margin-right: 30px; border-radius: 20px;">
   </a>   
   <a>---</a>
-  <a href="https://github.com/CycloneAddons/battery-protector/releases/download/v0.1.0/Battery.Protector_0.1.0_x64-setup.exe" target="_blank">
+  <a href="https://github.com/CycloneAddons/battery-protector/releases/download/v0.2.0/Battery.Protector_0.2.0_x64-setup.exe" target="_blank">
     <img src="https://i.postimg.cc/brdptVN6/Untitled-design.png" alt="EXE Icon"  height="70"  style="border-radius: 20px;">
   </a>
   
@@ -72,11 +72,8 @@ The application will start monitoring the battery status once launched:
 </p>
 
 ### <p align="center">📷 Video Demonstration</p>  
-<p align="center">Soon
-  <!-- <a>
-    <img src="" alt="Battery Protector Video Demonstration" width="500">
-  </a> -->
-</p>
+<p align="center">Soon, If you want a live demo of the software without installing it, go to <a href="https://batteryprotector.me">Battery Protector Site</a></p>
+
 
 ---
 
